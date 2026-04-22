@@ -1,11 +1,14 @@
 const {test, expect} = require('@playwright/test')
 
-const UATBaseUrl = 'https://uat-dashboard.mobiletraderv3.com';
+const UATBaseUrl = 'https://uat-dashboard.mobiletraderv3.com/';
 // user details
 
 //admin
 const UserName = 'surajudeen.y@mt3.com';
 const Psw = '4205'
+// Manager
+
+//TM
 
 async function login(page) {
     
