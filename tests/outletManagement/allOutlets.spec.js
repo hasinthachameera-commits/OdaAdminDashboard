@@ -12,7 +12,7 @@ async function selectOutletStatus(page, outletstatus) {
     //const regionFilterDropDown = page.locator('label:text("Region")').locator('xpath=ancestor::div[1]').getByRole('combobox');
     await expect(outletStatusFilterDropDown).toBeVisible();
     await outletStatusFilterDropDown.click();
-    const option = page.getByRole('option', { name: outletstatus });
+    const option = page.getByRole('option', { name: outletstatus, exact: true });
     await option.click();
 
     //await page.getByText(region, { exact: true }).click();
@@ -65,3 +65,4 @@ test('5. All Outlets - Verify the Archived Status', async ({ page }) => {
         await expect(rows.first()).toBeVisible();
 
 });
+

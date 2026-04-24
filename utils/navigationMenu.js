@@ -5,10 +5,6 @@ async function openDashboardMenu(page) {
 
         const hamburgerIcon = page.locator('svg.lucide-menu');
 
-     /*  if (await hamburgerIcon.isVisible().catch(() => false)) {
-        await hamburgerIcon.click();
-    }*/
-
         if (await hamburgerIcon.count() > 0) {
         await hamburgerIcon.first().click();
     }
@@ -30,12 +26,14 @@ async function sideMenu(page, mainMenu, subMenu) {
     
 
     // click submenu
-    if (subMenu) {
+    if (!subMenu) return;
+        
+        //{
         const sub = page.getByRole('link', { name: subMenu, exact: true });
         await expect(sub).toBeVisible({ timeout: 10000 });
         await sub.click();
 
-    }
+    //}
 }
 
 module.exports = {

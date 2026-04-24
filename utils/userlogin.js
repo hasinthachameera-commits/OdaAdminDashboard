@@ -1,25 +1,18 @@
 const {test, expect} = require('@playwright/test')
 
-const UATBaseUrl = 'https://uat-dashboard.mobiletraderv3.com/';
-// user details
-
-//admin
-const UserName = 'surajudeen.y@mt3.com';
-const Psw = '4205'
-// Manager
-
-//TM
+require('dotenv').config();
 
 async function login(page) {
     
 
-        await page.goto(`${UATBaseUrl}/login`);
+        await page.goto(`${process.env.UAT_BASE_URL}login`);
 
         //await page.goto(`${UATBaseUrl}/login`);
-        await expect(page.locator('h2')).toHaveText('Sign in to your account');
+        //await expect(page.locator('h2')).toHaveText('Sign in to your account');
+        await expect(page.getByRole('heading', { name: /sign in/i })).toBeVisible();
 
-        await page.getByPlaceholder('Username').fill(UserName);  // enter the username
-        await page.getByPlaceholder('Password').fill(Psw); // enter the password
+        await page.getByPlaceholder('Username').fill(process.env.Admin_USERNAME);  // enter the username
+        await page.getByPlaceholder('Password').fill(process.env.Admin_PASSWORD); // enter the password
 
         
         await page.getByRole('button').click();
