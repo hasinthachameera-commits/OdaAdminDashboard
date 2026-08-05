@@ -168,7 +168,7 @@ test.describe('5. Region Filter', () => {
 
 test.describe('6. Depot Filter', () => {
 
-    test.skip('6.1 Daily Loadout Manager - Verify Depot filter returns only records belonging to the selected depot', async ({ page }) => {
+    test('6.1 Daily Loadout Manager - Verify Depot filter returns only records belonging to the selected depot', async ({ page }) => {
 
         await login(page);
 
@@ -179,6 +179,9 @@ test.describe('6. Depot Filter', () => {
 
         // Select Depot
         await selectDepot(page, 'Ikorodu');
+
+        // Wait for table to finish refreshing
+        await page.waitForTimeout(3000);
 
         // Verify Depot filter is selected
         await expect(
@@ -193,7 +196,9 @@ test.describe('6. Depot Filter', () => {
         expect(depots.length).toBeGreaterThan(0);
 
         expect(
-            depots.every(depot => depot.trim() === 'Ikorodu')
+            depots.every(
+                depot => depot.trim() === 'Ikorodu'
+            )
         ).toBeTruthy();
 
     });
@@ -250,101 +255,32 @@ test.describe('7. Reset Filters', () => {
 
 });
 
+test.describe('8. Actions', () => {
 
+    test('8.1 Daily Loadout Manager - Verify Actions menu displays the View option', async ({ page }) => {
 
+        await login(page);
 
-// const { test, expect } = require('@playwright/test');
-// const { login } = require('../../utils/userlogin');
-// const { sideMenu } = require('../../utils/navigationMenu');
+        await sideMenu(page, 'Sales Rep Management', 'Daily Loadout');
 
-// const correctEDCode = 'E004369';
-// const incorrectEDCode = 'GHFE4232';
-// const partialName = 'Musa';
+        // First row
+        const firstRow = page.locator('tbody tr').first();
 
-// test('1. Daily Loadout Manager - Verify page loads with expected UI components', async ({ page }) => {
+        // Three-dot Actions icon
+        const actionMenu = firstRow.locator(
+            '.lucide.lucide-ellipsis-vertical'
+        );
 
-//     await login(page);
-//     await sideMenu(page, 'Sales Rep Management', 'Daily Loadout');
+        await expect(actionMenu).toBeVisible();
 
-//     // Verify breadcrumb
-//     await expect(page.getByLabel('Breadcrumb').getByText('Sales Rep Management')).toBeVisible();
-//     await expect(page.getByLabel('Breadcrumb').getByText('Daily Loadout')).toBeVisible();
+        // Open Actions menu
+        await actionMenu.click({ force: true });
 
-//     // Verify page title
-//     await expect(page.getByRole('heading', { name: 'Load Out Manager' })).toBeVisible();
+        // Verify View button appears
+        await expect(
+            page.getByRole('button', { name: 'View' })
+        ).toBeVisible();
 
-//     // Verify search textbox
-//     await expect(page.getByPlaceholder('Search ED Code, First Name or Last Name')).toBeVisible();
+    });
 
-//     // Verify Region filter
-//     await expect(page.getByRole('combobox').first()).toBeVisible();
-
-//     // Verify Depot filter
-//     await expect(page.getByRole('combobox').nth(1)).toBeVisible();
-
-//     // Verify Reset Filters button
-//     await expect(page.getByRole('button', { name: 'Reset Filters' })).toBeVisible();
-
-//     // Verify table headers
-//     await expect(page.getByRole('columnheader', { name: 'ED Code' })).toBeVisible();
-//     await expect(page.getByRole('columnheader', { name: 'Daily Customers' })).toBeVisible();
-//     await expect(page.getByRole('columnheader', { name: 'Actions' })).toBeVisible();
-
-// });
-
-// test('2. Daily Loadout Manager - Search using valid ED Code and verify matching record is returned', async ({ page }) => {
-
-//     await login(page);
-//     await sideMenu(page, 'Sales Rep Management', 'Daily Loadout');
-
-//     const searchBox = page.getByPlaceholder('Search ED Code, First Name or Last Name');
-
-//     await searchBox.fill(correctEDCode);
-
-//     const row = page.getByRole('row', {
-//         name: /Musa.*Ibrahim.*North.*Kano 2.*Great Brands Nigeria Limited.*Bike/i
-//     });
-
-//     await expect(row).toBeVisible();
-
-// });
-
-// test('3. Daily Loadout Manager - Search using invalid ED Code and verify no records are returned', async ({ page }) => {
-
-//     await login(page);
-//     await sideMenu(page, 'Sales Rep Management', 'Daily Loadout');
-
-//     const searchBox = page.getByPlaceholder('Search ED Code, First Name or Last Name');
-
-//     await searchBox.fill(incorrectEDCode);
-
-//     const row = page.getByRole('row', { name: /No Sales Reps Found/i });
-
-//     await expect(row).toBeVisible();
-
-// });
-
-// test('4. Daily Loadout Manager - Search using partial name and verify all returned records match the search term', async ({ page }) => {
-
-//     await login(page);
-//     await sideMenu(page, 'Sales Rep Management', 'Daily Loadout');
-
-//     const searchBox = page.getByPlaceholder('Search ED Code, First Name or Last Name');
-
-//     await searchBox.fill(partialName);
-
-//     const rows = page.locator('tbody tr');
-
-//     // Wait for search results to load
-//     await expect(rows.first()).toContainText(partialName);
-
-//     const rowCount = await rows.count();
-
-//     expect(rowCount).toBeGreaterThan(0);
-
-//     // Verify every returned record contains the search term
-//     for (let i = 0; i < rowCount; i++) {
-//         await expect(rows.nth(i)).toContainText(partialName);
-//     }
-
-// });
+});
