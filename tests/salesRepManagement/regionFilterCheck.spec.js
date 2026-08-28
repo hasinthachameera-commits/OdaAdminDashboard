@@ -1,11 +1,11 @@
 const {test, expect} = require('@playwright/test');
-const { login } = require('../../utils/userlogin');
+const { goToHome } = require('../../utils/userlogin');
 const { sideMenu } = require('../../utils/navigationMenu');
 const { selectDropdownOption } = require('../../utils/filters'); // added this import for selectDropdownOption function
 
 
 test.beforeEach(async ({ page }) => {
-    await login(page);
+    await goToHome(page);
     await sideMenu(page, 'Sales Rep Management', 'Sales Rep Activity');
 });
 

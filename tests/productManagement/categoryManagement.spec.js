@@ -1,12 +1,12 @@
 const {test, expect} = require('@playwright/test');
-const { login } = require('../../utils/userlogin');
+const { goToHome } = require('../../utils/userlogin');
 const { sideMenu } = require('../../utils/navigationMenu');
 const { paginationForwardButton} = require('../../utils/pagination');
 
 
 test('1. Product Management - Find the Tobacco category on the result set', async ({ page }) => {
 
-    await login(page);
+    await goToHome(page);
     await sideMenu(page, 'Product Management', 'Category Management');
 
      //const row1 = page.getByRole('row', { name: /Tobacco.*Yes/i });

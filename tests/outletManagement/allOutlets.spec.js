@@ -1,12 +1,12 @@
 const {test, expect} = require('@playwright/test');
-const { login } = require('../../utils/userlogin');
+const { goToHome } = require('../../utils/userlogin');
 const { sideMenu } = require('../../utils/navigationMenu');
 
 
 async function selectOutletStatus(page, outletstatus) {
     
 
-    await login(page);
+    await goToHome(page);
     await sideMenu(page, 'Outlet Management', 'All Outlets');
     const outletStatusFilterDropDown = page.getByText('Status').locator('..').getByRole('combobox');
     //const regionFilterDropDown = page.locator('label:text("Region")').locator('xpath=ancestor::div[1]').getByRole('combobox');
