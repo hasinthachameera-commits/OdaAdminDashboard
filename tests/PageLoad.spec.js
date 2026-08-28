@@ -1,15 +1,19 @@
 const {test, expect} = require('@playwright/test')
 
-const { login } = require('../utils/userlogin');
+const { goToHome } = require('../utils/userlogin');
 const { sideMenu } = require('../utils/navigationMenu');
 
 
 
 // Load the Oda Admin Login page and Log as administrator
-test.describe('Oda Admin Dashboard Links Check' , () =>{
+ test.describe('Oda Admin Dashboard Links Check', () => {
+    //test.describe.configure({ mode: 'serial' });
+
+
 
     test.beforeEach(async ({ page }) => {
-        await login(page);
+        //await login(page);
+        await goToHome(page);
     });
    
 

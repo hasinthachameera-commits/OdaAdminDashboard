@@ -1,11 +1,11 @@
 const {test, expect} = require('@playwright/test');
-const { login } = require('../../utils/userlogin');
+const { goToHome } = require('../../utils/userlogin');
 const { sideMenu } = require('../../utils/navigationMenu');
 
 
 test('1. Outlet Management - Create Outlet option visible', async ({ page }) => {
 
-    await login(page);
+    await goToHome(page);
     await sideMenu(page, 'Outlet Management', 'All Outlets');
     const createOutletBtn = page.getByRole('button', { name: 'create outlet' });
     await expect(createOutletBtn).toBeVisible();

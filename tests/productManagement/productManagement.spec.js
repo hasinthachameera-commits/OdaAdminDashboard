@@ -1,11 +1,11 @@
 const {test, expect} = require('@playwright/test');
-const { login } = require('../../utils/userlogin');
+const { goToHome } = require('../../utils/userlogin');
 const { sideMenu } = require('../../utils/navigationMenu');
 
 async function selectStatus(page, status) {
     
 
-    await login(page);
+    await goToHome(page);
     await sideMenu(page, 'Product Management', 'Product Management');
     const statusDropdown = page.getByText('Status').locator('..').getByRole('combobox');
     await expect(statusDropdown).toBeVisible();

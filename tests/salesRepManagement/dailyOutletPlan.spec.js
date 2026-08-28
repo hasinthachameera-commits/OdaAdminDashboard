@@ -1,10 +1,10 @@
 const {test, expect} = require('@playwright/test');
-const { login } = require('../../utils/userlogin');
+const { goToHome } = require('../../utils/userlogin');
 const { sideMenu } = require('../../utils/navigationMenu');
 
 test('1. Daily Outlet Plan - Verify the day filter default value Monday', async ({ page }) => {
 
-    await login(page);
+    await goToHome(page);
     await sideMenu(page, 'Sales Rep Management', 'Daily Outlet Plan');
     //Day filter default value
     const dayDropdown = page.getByText('Day').locator('..').getByRole('combobox');
@@ -15,7 +15,7 @@ test('1. Daily Outlet Plan - Verify the day filter default value Monday', async 
 
 test('2. Daily Outlet Plan - Verify the record availablility and open the popup using action button', async ({ page }) => {
 
-    await login(page);
+    await goToHome(page);
     await sideMenu(page, 'Sales Rep Management', 'Daily Outlet Plan');
     //verify the record availability
     const row = page.getByRole('row', { name: /SALIHU.*HASIMU.*Sales Representative.*Middle Belt.*Bauchi/i });

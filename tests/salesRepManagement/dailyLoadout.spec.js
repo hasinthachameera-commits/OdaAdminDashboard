@@ -1,5 +1,5 @@
 const {test, expect} = require('@playwright/test');
-const { login } = require('../../utils/userlogin');
+const { goToHome } = require('../../utils/userlogin');
 const { sideMenu } = require('../../utils/navigationMenu');
 
 const correctEDCode = 'E004369';
@@ -7,7 +7,7 @@ const incorrectEDcode = 'GHFE4232';
 
 test('1. Daily Loadout Manager - Search record using EDcode and verify the record available', async ({ page }) => {
 
-    await login(page);
+    await goToHome(page);
     await sideMenu(page, 'Sales Rep Management', 'Daily Loadout');
     // Enter the text to the textbox
     const searchBox = page.getByPlaceholder('Search ED Code, First Name or Last Name');
@@ -21,7 +21,7 @@ test('1. Daily Loadout Manager - Search record using EDcode and verify the recor
 
 test('2. Daily Loadout Manager - Search record using incorrect EDcode and verify there are no results', async ({ page }) => {
 
-    await login(page);
+    await goToHome(page);
     await sideMenu(page, 'Sales Rep Management', 'Daily Loadout');
     // Enter the text to the textbox
     const searchBox = page.getByPlaceholder('Search ED Code, First Name or Last Name');
