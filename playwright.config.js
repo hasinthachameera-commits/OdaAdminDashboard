@@ -21,9 +21,15 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : 4,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
+  /* Default timeout for expect() assertions. Raised from the 5s default
+     because many tests hit a shared live UAT server, and page loads can
+     lag under concurrent worker load. */
+  expect: {
+    timeout: 10000,
+  },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
@@ -36,8 +42,21 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      // Runs once before everything else: logs in and saves session state
+      // to playwright/.auth/user.json. This is what fixes the parallel
+      // login/session-collision issue - every other project reuses this
+      // single saved session instead of each test logging in on its own.
+      name: 'setup',
+      testMatch: /.*\.setup\.js/,
+    },
+
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json',
+      },
+      dependencies: ['setup'],
     },
 
     /*{
@@ -70,7 +89,7 @@ export default defineConfig({
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
   ],
-
+  
   /* Run your local dev server before starting the tests */
   // webServer: {
   //   command: 'npm run start',
@@ -78,4 +97,5 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
+
 

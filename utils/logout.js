@@ -2,19 +2,21 @@ const { expect } = require('@playwright/test');
 
 async function logout(page) {
 
-    // click user profile
-    const userProfile = page.locator('span:has-text("Surajudeen")');
+    // user avatar icon (stable selector)
+    const userIcon = page.locator(
+        'span.relative.flex.h-8.w-8.rounded-full'
+    );
 
-    await expect(userProfile).toBeVisible({ timeout: 10000 });
-    await userProfile.click();
+    await expect(userIcon).toBeVisible({ timeout: 10000 });
+    await userIcon.click();
 
-    // click logout button
+    // logout button (adjust if label differs in your UI)
     const logoutBtn = page.getByRole('button', { name: /logout/i });
 
     await expect(logoutBtn).toBeVisible({ timeout: 10000 });
     await logoutBtn.click();
 
-    // verify back to login page
+    // confirm redirected to login
     await expect(page).toHaveURL(/login/, { timeout: 10000 });
 }
 
