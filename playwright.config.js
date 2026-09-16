@@ -20,8 +20,10 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : 4,
+  /* Single worker everywhere: the shared UAT environment returns 503s and
+     server-side crashes under the concurrent load multiple workers create,
+     since every worker reuses the same authenticated session. */
+  workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Default timeout for expect() assertions. Raised from the 5s default
