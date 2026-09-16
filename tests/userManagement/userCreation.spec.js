@@ -36,38 +36,24 @@ test('1. User Management - Create new user with Admin role by entering only the 
     await page.getByPlaceholder('Last Name').fill('User');
     await page.locator('input[name="phoneNumber"]').fill('0905345346');
 
-    // Select Company, Region from dropdowns and Enter the ED code
-    // Select Company dropdown
-// Company dropdown
-
-    // Company dropdown
-    const companyDropdown = page.locator('button[role="combobox"]').first();
-
-await expect(companyDropdown).toBeVisible();
-await companyDropdown.click();
-
-// WAIT for Radix popup (key fix)
-const popup = page.locator('[role="listbox"]');
-
-await expect(popup).toBeVisible({ timeout: 10000 });
-
-// NOW select from popup only
-const companyOption = popup.getByText('Great Brands Nigeria Limited', {
-  exact: true
-});
-
-await expect(companyOption).toBeVisible();
-await companyOption.click();
-
-// verify selection
-await expect(companyDropdown).toContainText('Great Brands Nigeria Limited');
-
-    /*const companyDropdown = page.locator('div').filter({ hasText: /Company/ }).getByRole('combobox').first();
+    // Select Company, Region from dropdowns and Enter the ED code.
+    // Scoped by the label's exact text ("Company *") since a plain
+    // substring match on "Company" also matches the "Company Information"
+    // section heading - unlike the other labeled fields on this page. A
+    // previous version of this selector used
+    // `page.locator('button[role="combobox"]').first()`, which actually
+    // grabbed the Role dropdown (the first combobox in DOM order) instead
+    // of Company, so it silently opened the wrong dropdown.
+    const companyDropdown = page.getByText('Company *', { exact: true }).locator('..').getByRole('combobox');
     await expect(companyDropdown).toBeVisible();
     await companyDropdown.click();
-    const companyOption = page.getByText(/Great Brands Nigeria Limited/i);
-    await expect(companyOption).toBeVisible({ timeout: 10000 });
-    await companyOption.click();*/
+
+    const companyOption = page.getByRole('option', { name: 'Great Brands Nigeria Limited', exact: true });
+    await expect(companyOption).toBeVisible();
+    await companyOption.click();
+
+    // verify selection
+    await expect(companyDropdown).toContainText('Great Brands Nigeria Limited');
 
     const regionDropdown = page.getByText('Region').locator('..').getByRole('combobox');
     await expect(regionDropdown).toBeVisible();
