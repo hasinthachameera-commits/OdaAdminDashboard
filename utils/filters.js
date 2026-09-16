@@ -14,11 +14,15 @@ const { expect } = require('@playwright/test');
  * @param {{ exact?: boolean }} [options]
  */
 async function selectDropdownOption(page, labelText, optionName, { exact = true } = {}) {
-    const dropdown = page.getByText(labelText).locator('..').getByRole('combobox');
+    // Scoped to visible elements: some pages render a duplicate hidden
+    // copy of a field (e.g. a mobile-layout version alongside the desktop
+    // one), which would otherwise make these locators ambiguous or match
+    // the wrong element.
+    const dropdown = page.getByText(labelText).locator('..').getByRole('combobox').filter({ visible: true });
     await expect(dropdown).toBeVisible();
     await dropdown.click();
 
-    const option = page.getByRole('option', { name: optionName, exact });
+    const option = page.getByRole('option', { name: optionName, exact }).filter({ visible: true });
     await expect(option).toBeVisible();
     await option.click();
 
