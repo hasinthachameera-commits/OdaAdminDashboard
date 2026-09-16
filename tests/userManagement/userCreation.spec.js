@@ -14,10 +14,10 @@ async function createNewUser(page, userrole) {
     const newUserPageText = page.getByText('Fill in information in order to create a user profile');
     await expect(newUserPageText).toBeVisible({ timeout: 10000 });
 
-    const roleDropdown = page.getByText('Select Role').locator('..').getByRole('combobox');
+    const roleDropdown = page.getByText('Select Role').locator('..').getByRole('combobox').filter({ visible: true });
     await expect(roleDropdown).toBeVisible();
     await roleDropdown.click();
-    const option = page.getByRole('option', { name: userrole, exact: true });
+    const option = page.getByRole('option', { name: userrole, exact: true }).filter({ visible: true });
     await option.click();
 
     //wait until dropdown reflects selected value
@@ -81,50 +81,42 @@ test('1. User Management - Create new user with Admin role by entering only the 
     await page.getByPlaceholder('Last Name').fill('User');
     await page.locator('input[name="phoneNumber"]').fill('0905345346');
 
-    // Select Company, Region from dropdowns and Enter the ED code
-    // Select Company dropdown
-// Company dropdown
-
-    // Company dropdown
-    const companyDropdown = page.locator('button[role="combobox"]').first();
-
-await expect(companyDropdown).toBeVisible();
-await companyDropdown.click();
-
-// WAIT for Radix popup (key fix)
-const popup = page.locator('[role="listbox"]');
-
-await expect(popup).toBeVisible({ timeout: 10000 });
-
-// NOW select from popup only
-const companyOption = popup.getByText('Great Brands Nigeria Limited', {
-  exact: true
-});
-
-await expect(companyOption).toBeVisible();
-await companyOption.click();
-
-// verify selection
-await expect(companyDropdown).toContainText('Great Brands Nigeria Limited');
-
-    /*const companyDropdown = page.locator('div').filter({ hasText: /Company/ }).getByRole('combobox').first();
+    // Select Company, Region from dropdowns and Enter the ED code.
+    // Scoped by the label's exact text ("Company *") since a plain
+    // substring match on "Company" also matches the "Company Information"
+    // section heading - unlike the other labeled fields on this page. A
+    // previous version of this selector used
+    // `page.locator('button[role="combobox"]').first()`, which actually
+    // grabbed the Role dropdown (the first combobox in DOM order) instead
+    // of Company, so it silently opened the wrong dropdown.
+    const companyDropdown = page.getByText('Company *', { exact: true }).locator('..').getByRole('combobox').filter({ visible: true });
     await expect(companyDropdown).toBeVisible();
     await companyDropdown.click();
-    const companyOption = page.getByText(/Great Brands Nigeria Limited/i);
-    await expect(companyOption).toBeVisible({ timeout: 10000 });
-    await companyOption.click();*/
 
-    const regionDropdown = page.getByText('Region').locator('..').getByRole('combobox');
+    const companyOption = page.getByRole('option', { name: 'Great Brands Nigeria Limited', exact: true }).filter({ visible: true });
+    await expect(companyOption).toBeVisible();
+    await companyOption.click();
+
+    // verify selection
+    await expect(companyDropdown).toContainText('Great Brands Nigeria Limited');
+
+    const regionDropdown = page.getByText('Region').locator('..').getByRole('combobox').filter({ visible: true });
     await expect(regionDropdown).toBeVisible();
     await regionDropdown.click();
-    const regionOption = page.getByRole('option', { name: 'North', exact: true });
+    const regionOption = page.getByRole('option', { name: 'North', exact: true }).filter({ visible: true });
     await regionOption.click();
     await expect(regionDropdown).toContainText('North');
 
-    await page.getByPlaceholder('ED Code').fill('YTRF9876');
+    // Unique per run: a fixed username/ED code would only work the first
+    // time this test is ever run - any rerun (CI retry, re-running the
+    // suite locally) would hit the app's duplicate-username validation
+    // instead of the success toast. Trimmed to the last 6 digits of the
+    // timestamp to stay close to the original values' length/format.
+    const uniqueSuffix = Date.now().toString().slice(-6);
+    await page.getByPlaceholder('ED Code').fill(`YTRF${uniqueSuffix}`);
 
     // Enter username, password and confirm password
-    await page.getByPlaceholder('Username').fill('TrazorGT66');
+    await page.getByPlaceholder('Username').fill(`TrazorGT${uniqueSuffix}`);
     await page.getByPlaceholder('Password').fill('G123');
     await page.getByPlaceholder('Confirm Password').fill('G123');
 
