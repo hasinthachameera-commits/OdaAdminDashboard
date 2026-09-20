@@ -2,7 +2,7 @@ const {test, expect} = require('@playwright/test');
 const { goToHome } = require('../../utils/userlogin');
 const { sideMenu } = require('../../utils/navigationMenu');
 
-test('1. Daily Outlet Plan - Verify the day filter default value Monday', async ({ page }) => {
+test('1. Daily Outlet Plan - Verify the day filter default value Monday', { tag: '@smoke' }, async ({ page }) => {
 
     await goToHome(page);
     await sideMenu(page, 'Sales Rep Management', 'Daily Outlet Plan');

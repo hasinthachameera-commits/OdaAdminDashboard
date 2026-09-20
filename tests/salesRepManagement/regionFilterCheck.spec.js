@@ -24,7 +24,7 @@ test.beforeEach(async ({ page }) => {
 }*/
 
 
-test('30. Rep Activity - Region Lagos selection', async ({ page }) => {
+test('30. Rep Activity - Region Lagos selection', { tag: '@smoke' }, async ({ page }) => {
     
     await selectDropdownOption(page, 'Region', 'Lagos', { exact: false });
     //await selectRegion(page, 'Lagos');

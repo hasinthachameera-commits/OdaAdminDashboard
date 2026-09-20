@@ -70,7 +70,8 @@ test.describe('Splash Alert Management - list filters', () => {
         const STATUSES = ['Active', 'Inactive'];
 
         for (const [index, status] of STATUSES.entries()) {
-            test(`1.${index + 1} Splash Alert Management - Status filter ${status} shows only ${status} alerts`, async ({ page }) => {
+            // Only the first variant is part of the smoke suite.
+            test(`1.${index + 1} Splash Alert Management - Status filter ${status} shows only ${status} alerts`, index === 0 ? { tag: '@smoke' } : {}, async ({ page }) => {
                 await selectDropdownOption(page, 'Status', status);
                 await verifyColumnEquals(page, COLUMN.status, status);
             });

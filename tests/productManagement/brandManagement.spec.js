@@ -20,7 +20,7 @@ async function selectCategory(page, category) {
 }
 
 
-test('1. Brand Management - Verify tobacco category Brands', async ({ page }) => {
+test('1. Brand Management - Verify tobacco category Brands', { tag: '@smoke' }, async ({ page }) => {
 
             await selectCategory(page, 'Tobacco');
             // verify the Tobacco category on the result set

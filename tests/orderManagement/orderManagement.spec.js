@@ -64,7 +64,10 @@ test.describe('1. Status filter', () => {
     const STATUSES = ['Pending', 'Delivered', 'Cancelled', 'Expired'];
 
     for (const [index, status] of STATUSES.entries()) {
-        test(`1.${index + 1} Order Management - Status filter ${status} shows only ${status} orders`, async ({ page }) => {
+        // Only the first variant (Pending) is part of the smoke suite - one
+        // representative check per module is enough there, the full sweep
+        // across every status belongs to the regular suite.
+        test(`1.${index + 1} Order Management - Status filter ${status} shows only ${status} orders`, index === 0 ? { tag: '@smoke' } : {}, async ({ page }) => {
             await selectDropdownOption(page, 'Status', status);
             await verifyColumnEquals(page, COLUMN.status, status);
         });

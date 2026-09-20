@@ -15,7 +15,7 @@ async function searchAndVerifyCategory(page, categoryName) {
     await expect(row.first()).toBeVisible({ timeout: 10000 });
 }
 
-test('1. Product Management - Find the Tobacco category on the result set', async ({ page }) => {
+test('1. Product Management - Find the Tobacco category on the result set', { tag: '@smoke' }, async ({ page }) => {
 
     await goToHome(page);
     await sideMenu(page, 'Product Management', 'Category Management');

@@ -17,7 +17,7 @@ const { sideMenu } = require('../utils/navigationMenu');
     });
    
 
-    test('1. Home Page load after login', async({page}) => {
+    test('1. Home Page load after login', { tag: '@smoke' }, async({page}) => {
 
 
         await expect(page).toHaveURL(/home/, { timeout: 10000 });
@@ -27,7 +27,7 @@ const { sideMenu } = require('../utils/navigationMenu');
     })
     
 
-    /*test('2. Open Dashboard Menu', async({page}) => {
+    /*test('2. Open Dashboard Menu', { tag: '@smoke' }, async({page}) => {
 
         await page.waitForTimeout(5000);
         await page.locator('svg.lucide-menu').click();
@@ -37,7 +37,7 @@ const { sideMenu } = require('../utils/navigationMenu');
 
     })*/
 
-test('3. Sales Rep Activity page load', async({page}) => {
+test('3. Sales Rep Activity page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Sales Rep Management', 'Sales Rep Activity');
     await expect(page.locator('h1')).toHaveText('Sales Rep Activity');
@@ -45,7 +45,7 @@ test('3. Sales Rep Activity page load', async({page}) => {
 
 })
 
-test('4. Daily Outlet Plan page load', async({page}) => {
+test('4. Daily Outlet Plan page load', { tag: '@smoke' }, async({page}) => {
 
     /*await openDashboardMenu(page);
     await page.getByText('Sales Rep Management', { exact: true }).click();
@@ -61,7 +61,7 @@ test('4. Daily Outlet Plan page load', async({page}) => {
 
 })
 
-test('5. Daily loadout page load', async({page}) => {
+test('5. Daily loadout page load', { tag: '@smoke' }, async({page}) => {
 
     /*await openDashboardMenu(page);
     await page.getByText('Sales Rep Management', { exact: true }).click();
@@ -76,7 +76,7 @@ test('5. Daily loadout page load', async({page}) => {
 
 })
 
-test('6. Sales Rep Data Usage page load', async({page}) => {
+test('6. Sales Rep Data Usage page load', { tag: '@smoke' }, async({page}) => {
     
 
     await sideMenu(page, 'Sales Rep Management', 'Sales Rep Data Usage');
@@ -86,7 +86,7 @@ test('6. Sales Rep Data Usage page load', async({page}) => {
 
 })
 
-test('7. Route Management page load', async({page}) => {
+test('7. Route Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Route Management', 'Route Management');
     await expect(page.locator('h1')).toHaveText('Route Management');
@@ -95,7 +95,7 @@ test('7. Route Management page load', async({page}) => {
 
 })
 
-test('8. Route Optimisation page load', async({page}) => {
+test('8. Route Optimisation page load', { tag: '@smoke' }, async({page}) => {
 ;
     await sideMenu(page, 'Route Management', 'Route Optimization');
     await expect(page.locator('h1')).toHaveText('Route Optimization');
@@ -103,7 +103,7 @@ test('8. Route Optimisation page load', async({page}) => {
 
 })
 
-test('9. Pending Outlets page load', async({page}) => {
+test('9. Pending Outlets page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Outlet Management', 'Pending Outlets');
     await expect(page.locator('h1')).toContainText('Pending Outlets');
@@ -111,7 +111,7 @@ test('9. Pending Outlets page load', async({page}) => {
 
 })
 
-test('10. All Outlets page load', async({page}) => {
+test('10. All Outlets page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Outlet Management', 'All Outlets');
     await expect(page.locator('h1')).toContainText('All Outlets');
@@ -119,7 +119,7 @@ test('10. All Outlets page load', async({page}) => {
 
 })
 
-test('11. Outlet Archive Requests page load', async({page}) => {
+test('11. Outlet Archive Requests page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Outlet Management', 'Outlet Archive Requests');
     await expect(page.locator('h1')).toHaveText('Outlet Archive Requests');
@@ -127,7 +127,7 @@ test('11. Outlet Archive Requests page load', async({page}) => {
 
 })
 
-test('12. Credit Eligible SKUs page load', async({page}) => {
+test('12. Credit Eligible SKUs page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Credit Management', 'Credit Eligible SKUs');
     await expect(page.locator('h1')).toHaveText('Credit Eligible SKUs');
@@ -136,7 +136,7 @@ test('12. Credit Eligible SKUs page load', async({page}) => {
 
 })
 
-test('13. Credit Limits page load', async({page}) => {
+test('13. Credit Limits page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Credit Management', 'Credit Limits');
     await expect(page.locator('h1')).toHaveText('Credit Limits');
@@ -145,7 +145,7 @@ test('13. Credit Limits page load', async({page}) => {
 
 })
 
-test('14. Credit Utilisation page load', async({page}) => {
+test('14. Credit Utilisation page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Credit Management', 'Credit Utilisation');
     await expect(page.locator('h1')).toHaveText('Credit Utilisation');
@@ -153,7 +153,7 @@ test('14. Credit Utilisation page load', async({page}) => {
 
 })
 
-test('15. Promotion Management page load', async({page}) => {
+test('15. Promotion Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Promotion Management', 'Promotion Management');
     await expect(page.locator('h1')).toHaveText('Promotion Management');
@@ -162,7 +162,7 @@ test('15. Promotion Management page load', async({page}) => {
 
 })
 
-test('16. Splash Alert Management page load', async({page}) => {
+test('16. Splash Alert Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Promotion Management', 'Splash Alert Management');
     await expect(page.locator('h1')).toHaveText('Splash Alert Management');
@@ -170,7 +170,7 @@ test('16. Splash Alert Management page load', async({page}) => {
 
 })
 
-test('17. Category Management page load', async({page}) => {
+test('17. Category Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Product Management', 'Category Management');
     await expect(page.locator('h1')).toHaveText('Category Management');
@@ -179,7 +179,7 @@ test('17. Category Management page load', async({page}) => {
 
 })
 
-test('18. Brand Management page load', async({page}) => {
+test('18. Brand Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Product Management', 'Brand Management');
     await expect(page.locator('h1')).toHaveText('Brand Management');
@@ -189,7 +189,7 @@ test('18. Brand Management page load', async({page}) => {
 
 })
 
-test('19. Supplier Management page load', async({page}) => {
+test('19. Supplier Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Product Management', 'Supplier Management');
     await expect(page.locator('h1')).toHaveText('Supplier Management');
@@ -199,7 +199,7 @@ test('19. Supplier Management page load', async({page}) => {
 
 })
 
-test('20. UOM Management page load', async({page}) => {
+test('20. UOM Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Product Management', 'UOM Management');
     await expect(page.locator('h1')).toHaveText('UOM Management');
@@ -209,7 +209,7 @@ test('20. UOM Management page load', async({page}) => {
 
 })
 
-test('21. Product Management page load', async({page}) => {
+test('21. Product Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Product Management', 'Product Management');
     await expect(page.locator('h1')).toHaveText('Product Management');
@@ -217,7 +217,7 @@ test('21. Product Management page load', async({page}) => {
 
 })
 
-test('22. Competitor Product Management page load', async({page}) => {
+test('22. Competitor Product Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Product Management', 'Competitor Product Management');
     await expect(page.locator('h1')).toHaveText('Competitor Product Management');
@@ -225,7 +225,7 @@ test('22. Competitor Product Management page load', async({page}) => {
 
 })
 
-test('23. Order Management page load', async({page}) => {
+test('23. Order Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Order Management');
     await expect(page.locator('h1')).toHaveText('Order Management');
@@ -234,7 +234,7 @@ test('23. Order Management page load', async({page}) => {
 
 })
 
-test('24. User Management page load', async({page}) => {
+test('24. User Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'User Management', 'User Management');
     await expect(page.locator('h1')).toHaveText('User Management');
@@ -243,7 +243,7 @@ test('24. User Management page load', async({page}) => {
 
 })
 
-test('25. User Issues page load', async({page}) => {
+test('25. User Issues page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'User Management', 'User Issue');
     await expect(page.locator('h1')).toHaveText('User Issue');
@@ -251,11 +251,35 @@ test('25. User Issues page load', async({page}) => {
 
 })
 
-test('26. Compliance Document Management page load', async({page}) => {
+test('26. Compliance Document Management page load', { tag: '@smoke' }, async({page}) => {
 
     await sideMenu(page, 'Content Management', 'Compliance Document Management');
     await expect(page.locator('h1')).toHaveText('Compliance Document Management');
     console.log('Compliance Document Management page load successfully ' + page.url());
+
+})
+
+test('27. Outlet Retention page load', { tag: '@smoke' }, async({page}) => {
+
+    await sideMenu(page, 'Outlet Management', 'Outlet Retention');
+    await expect(page.locator('h1')).toHaveText('Outlet Retention');
+    console.log('Outlet Retention page load successfully ' + page.url());
+
+})
+
+test('28. Rewards Management page load', { tag: '@smoke' }, async({page}) => {
+
+    await sideMenu(page, 'Rewards Management', 'Rewards Management');
+    await expect(page.locator('h1')).toHaveText('Rewards Management');
+    console.log('Rewards Management page load successfully ' + page.url());
+
+})
+
+test('29. Rewards Visibility page load', { tag: '@smoke' }, async({page}) => {
+
+    await sideMenu(page, 'Rewards Management', 'Rewards Visibility');
+    await expect(page.locator('h1')).toHaveText('Rewards Visibility');
+    console.log('Rewards Visibility page load successfully ' + page.url());
 
 })
 

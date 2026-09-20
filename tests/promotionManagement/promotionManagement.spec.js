@@ -87,7 +87,8 @@ test.describe('1. Status filter', () => {
     const STATUSES = ['Active', 'Inactive'];
 
     for (const [index, status] of STATUSES.entries()) {
-        test(`1.${index + 1} Promotion Management - Status filter ${status} shows only ${status} promotions`, async ({ page }) => {
+        // Only the first variant is part of the smoke suite.
+        test(`1.${index + 1} Promotion Management - Status filter ${status} shows only ${status} promotions`, index === 0 ? { tag: '@smoke' } : {}, async ({ page }) => {
             await selectDropdownOption(page, 'Status', status);
             await verifyColumnEquals(page, COLUMN.status, status);
         });

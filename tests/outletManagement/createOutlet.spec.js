@@ -4,7 +4,7 @@ const { sideMenu } = require('../../utils/navigationMenu');
 const { selectDropdownOption } = require('../../utils/filters');
 
 
-test('1. Outlet Management - Create Outlet option visible', async ({ page }) => {
+test('1. Outlet Management - Create Outlet option visible', { tag: '@smoke' }, async ({ page }) => {
 
     await goToHome(page);
     await sideMenu(page, 'Outlet Management', 'All Outlets');
