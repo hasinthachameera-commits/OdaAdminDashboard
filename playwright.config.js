@@ -26,9 +26,24 @@ export default defineConfig({
   workers: 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
+  /* Per-test timeout, raised from Playwright's 30s default. This budget
+     covers beforeEach hooks as well as the test body, which is why it has
+     to be set globally: the common CI failure was goToHome()'s page.goto
+     blowing the 30s budget inside beforeEach, before the test body (and any
+     test.setTimeout() call in it) ever ran.
+
+     The shared UAT server is the real constraint here - measured directly,
+     it took ~1.9s to respond to /home on a good moment and ~12s for
+     /product-management on a slow one, and in CI it has gone past 30s.
+     Note that waitUntil: 'domcontentloaded' does NOT help: the gap between
+     domContentLoaded and load measured 0-306ms, so the wait is server
+     response time, not asset loading. */
+  timeout: 90000,
   /* Default timeout for expect() assertions. Raised from the 5s default
      because many tests hit a shared live UAT server, and page loads can
-     lag under concurrent worker load. */
+     lag under concurrent worker load. Deliberately left at 10s so genuine
+     failures still surface quickly - the few genuinely slow-rendering
+     pages raise this per-assertion instead. */
   expect: {
     timeout: 10000,
   },
