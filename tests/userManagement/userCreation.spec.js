@@ -70,7 +70,11 @@ async function submitAndVerifyCreated(page) {
     await expect(page.getByText('Success!', { exact: true })).toBeVisible({ timeout: 10000 });
 }
 
-test('1. User Management - Create new user with Admin role by entering only the mandatory values', async ({ page }) => {
+// Tagged @creation: opt-in only, deliberately kept out of CI and the smoke
+// suite because it creates a real user on the shared UAT environment every
+// time it runs. Run it on purpose with:
+//   npx playwright test --grep @creation
+test('1. User Management - Create new user with Admin role by entering only the mandatory values', { tag: '@creation' }, async ({ page }) => {
 
     await createNewUser(page,'Admin');
     const userRoleDropDown = page.getByText('Role').locator('..').getByRole('combobox');

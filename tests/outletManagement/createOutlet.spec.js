@@ -4,7 +4,12 @@ const { sideMenu } = require('../../utils/navigationMenu');
 const { selectDropdownOption } = require('../../utils/filters');
 
 
-test('1. Outlet Management - Create Outlet option visible', { tag: '@smoke' }, async ({ page }) => {
+// Both tests in this file are tagged @creation: they are opt-in only and
+// deliberately kept out of CI and the smoke suite. Test 2 creates a real
+// outlet on the shared UAT environment, and test 1 opens the creation flow -
+// neither should run automatically on every push. Run them on purpose with:
+//   npx playwright test --grep @creation
+test('1. Outlet Management - Create Outlet option visible', { tag: '@creation' }, async ({ page }) => {
 
     await goToHome(page);
     await sideMenu(page, 'Outlet Management', 'All Outlets');
@@ -17,7 +22,7 @@ test('1. Outlet Management - Create Outlet option visible', { tag: '@smoke' }, a
 
 });
 
-test('2. Outlet Management - Create Outlet by entering only the mandatory values', async ({ page }) => {
+test('2. Outlet Management - Create Outlet by entering only the mandatory values', { tag: '@creation' }, async ({ page }) => {
 
     await goToHome(page);
     await sideMenu(page, 'Outlet Management', 'All Outlets');
