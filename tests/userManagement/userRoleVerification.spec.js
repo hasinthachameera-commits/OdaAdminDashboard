@@ -21,7 +21,7 @@ async function selectUserRole(page, userrole) {
 
 }
 
-test('1. User Management - Verify the Admin Role', async ({ page }) => {
+test('1. User Management - Verify the Admin Role', { tag: '@smoke' }, async ({ page }) => {
 
         await selectUserRole(page, 'Admin');
         //await page.waitForSelector('tbody tr');

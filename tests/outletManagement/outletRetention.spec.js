@@ -94,7 +94,7 @@ test.describe('2. Channel filter', () => {
 // every other section in this app), so this can only verify the filter
 // visibly does something - either real rows appear or the empty state
 // shows - rather than checking a specific column value.
-test('3. Outlet Retention - Depot filter Lekki', async ({ page }) => {
+test('3. Outlet Retention - Depot filter Lekki', { tag: '@smoke' }, async ({ page }) => {
 
     await selectDropdownOption(page, 'Depot', 'Lekki');
     const rows = page.locator('tbody tr');

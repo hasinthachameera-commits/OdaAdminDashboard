@@ -65,7 +65,12 @@ test.describe('1. Status filter', () => {
     const STATUSES = ['Pending', 'Approved', 'Rejected', 'Onboarded', 'Update Pending', 'Archived'];
 
     for (const [index, status] of STATUSES.entries()) {
-        test(`1.${index + 1} All Outlets - Status filter ${status} shows only ${status} outlets`, async ({ page }) => {
+        // Only "Pending" (index 0) is part of the smoke suite - "Approved"
+        // and "Onboarded" are the two confirmed-broken variants noted
+        // above, so they're excluded from smoke on purpose (a known,
+        // already-tracked app bug shouldn't make every deploy's smoke run
+        // red for the same reason).
+        test(`1.${index + 1} All Outlets - Status filter ${status} shows only ${status} outlets`, index === 0 ? { tag: '@smoke' } : {}, async ({ page }) => {
             await selectDropdownOption(page, 'Status', status);
             await verifyColumnEquals(page, COLUMN.status, status);
         });

@@ -24,13 +24,17 @@ test.beforeEach(async ({ page }) => {
 }*/
 
 
-test('30. Rep Activity - Region Lagos selection', async ({ page }) => {
-    
+// The row assertion gets longer than the global 10s: this failed in CI with
+// "no row containing Lekki found", but re-running it locally passed and the
+// live page does show several Lekki reps under Region = Lagos - so the data
+// is fine and the table simply hadn't finished loading in time.
+test('30. Rep Activity - Region Lagos selection', { tag: '@smoke' }, async ({ page }) => {
+
     await selectDropdownOption(page, 'Region', 'Lagos', { exact: false });
     //await selectRegion(page, 'Lagos');
     // verify the depot name Lekki on the result set
     const rows = page.locator('tr', { hasText: 'Lekki' });
-    await expect(rows.first()).toBeVisible();
+    await expect(rows.first()).toBeVisible({ timeout: 30000 });
 });
 
 

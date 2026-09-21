@@ -73,7 +73,7 @@ test('2. Pending Outlets - Depot filter Lekki (requires Region to be selected fi
 // Goal: the search box should narrow results to outlets whose name
 // actually contains the search term, and the empty-state case proves a
 // made-up name shows an honest "no outlets found" message.
-test('3. Pending Outlets - Search by outlet name returns only matching outlets', async ({ page }) => {
+test('3. Pending Outlets - Search by outlet name returns only matching outlets', { tag: '@smoke' }, async ({ page }) => {
 
     const searchTerm = 'HC';
     await page.getByPlaceholder('Search for an outlet').fill(searchTerm);

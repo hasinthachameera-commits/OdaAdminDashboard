@@ -17,12 +17,29 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
+    # Smoke tests only on every push/PR - the full suite takes far longer and
+    # the shared UAT environment gets flaky under repeated full runs.
+    # --grep-invert @creation is a safety net: @creation tests (create user,
+    # create outlet) write real data to the shared UAT environment, so they
+    # stay opt-in and must never run automatically, even if one of them is
+    # ever tagged @smoke by mistake.
+    # To run those deliberately:  npx playwright test --grep @creation
+    - name: Run Playwright smoke tests
+      run: npx playwright test --grep @smoke --grep-invert @creation
       env:
         UAT_BASE_URL: ${{ secrets.UAT_BASE_URL }}
         Admin_USERNAME: ${{ secrets.ADMIN_USERNAME }}
         Admin_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+
+    # Previous behaviour: ran the FULL suite on every push. Kept here on
+    # purpose - to go back to it, comment out the smoke step above and
+    # uncomment this one.
+    # - name: Run Playwright tests
+    #   run: npx playwright test
+    #   env:
+    #     UAT_BASE_URL: ${{ secrets.UAT_BASE_URL }}
+    #     Admin_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+    #     Admin_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

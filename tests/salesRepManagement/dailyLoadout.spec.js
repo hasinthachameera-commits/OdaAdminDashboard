@@ -5,7 +5,7 @@ const { sideMenu } = require('../../utils/navigationMenu');
 const correctEDCode = 'E004369';
 const incorrectEDcode = 'GHFE4232';
 
-test('1. Daily Loadout Manager - Search record using EDcode and verify the record available', async ({ page }) => {
+test('1. Daily Loadout Manager - Search record using EDcode and verify the record available', { tag: '@smoke' }, async ({ page }) => {
 
     await goToHome(page);
     await sideMenu(page, 'Sales Rep Management', 'Daily Loadout');

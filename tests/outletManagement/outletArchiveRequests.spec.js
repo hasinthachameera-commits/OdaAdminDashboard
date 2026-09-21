@@ -60,9 +60,9 @@ test.describe('1. Region filter', () => {
 // Goal: the search box should narrow results to outlets whose name
 // actually contains the search term, and the empty-state case proves a
 // made-up name shows an honest "no results" message.
-test('2. Outlet Archive Requests - Search by outlet name returns only matching outlets', async ({ page }) => {
+test('2. Outlet Archive Requests - Search by outlet name returns only matching outlets', { tag: '@smoke' }, async ({ page }) => {
 
-    const searchTerm = 'a';
+    const searchTerm = 'new';
     await page.getByPlaceholder('Search for an outlet').fill(searchTerm);
     await expect(async () => {
         const rows = page.locator('tbody tr');

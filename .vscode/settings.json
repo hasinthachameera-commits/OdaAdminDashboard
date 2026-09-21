@@ -1,0 +1,10 @@
+{
+    "chat.mcp.serverSampling": {
+        "PlaywriteHC/.vscode/mcp.json: playwright": {
+            "allowedModels": [
+                "copilot/auto",
+                "copilotcli/auto"
+            ]
+        }
+    }
+}

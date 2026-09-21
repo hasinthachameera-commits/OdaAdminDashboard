@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 
-test('1. Supplier Management - Select a value from Brand Filter', async ({ page }) => {
+test('1. Supplier Management - Select a value from Brand Filter', { tag: '@smoke' }, async ({ page }) => {
     
     const brandDropdown = page.getByText('Brand').locator('..').getByRole('combobox');
     await expect(brandDropdown).toBeVisible();
