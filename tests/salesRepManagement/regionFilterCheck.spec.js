@@ -24,13 +24,21 @@ test.beforeEach(async ({ page }) => {
 }*/
 
 
+// TRIAL - raised timeouts on this test only (tests 31-34 below still use the
+// global 30s test / 10s expect limits, so they act as a control group).
+// This failed in CI with "no row containing Lekki found", but re-running it
+// locally passed and the live page does show several Lekki reps under
+// Region = Lagos - so the data is fine and the table simply hadn't finished
+// loading inside the 10s the assertion allowed.
 test('30. Rep Activity - Region Lagos selection', { tag: '@smoke' }, async ({ page }) => {
-    
+
+    test.setTimeout(60000);
+
     await selectDropdownOption(page, 'Region', 'Lagos', { exact: false });
     //await selectRegion(page, 'Lagos');
     // verify the depot name Lekki on the result set
     const rows = page.locator('tr', { hasText: 'Lekki' });
-    await expect(rows.first()).toBeVisible();
+    await expect(rows.first()).toBeVisible({ timeout: 30000 });
 });
 
 
